@@ -1,0 +1,1 @@
+require 'happy_seo'
