@@ -9,6 +9,16 @@ Example
 
 Basic Usage
 
+  To use happy_seo for a model just declare it as such inside the class
+  
+  class Author < ActiveRecord::Base
+    has_many :books
+
+    happy_seo
+  end
+  
+  Using it:
+
   >> joel = Author.find_by_name('Joel Salatin')
   => #<Author id: 2, name: "Joel Salatin", description: "Joel F. Salatin (born 1957) is an American farmer, ...", tags: "smart, opinionated, honest, clever, determined", created_at: "2009-04-19 03:31:11", updated_at: "2009-04-19 03:31:11">
 
@@ -51,5 +61,7 @@ Modifying the Attributes from the Defaults
 
     joel.meta_description
     => "Joel Salatin. smart, opinionated, honest, clever, determined"
+    
+For more information on how to use it check out the specs inside the spec directory of the plugin, or read the code, there's not much to it :)
 
 Copyright (c) 2009 Shane Wolf, released under the MIT license
