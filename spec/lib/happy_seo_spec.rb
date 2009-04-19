@@ -41,35 +41,40 @@ describe HappySeo do
     @event.meta_keywords( [:name, :city_name, :tags] ).should eql('Ohio State vs Wisconsin, Columbus, fun, football, horsehoe')
   end
   
-  it "should generate description string based on name, description, tags by default" do
-    @event.meta_description.should eql('Ohio State vs Wisconsin. Ohio State looks to extend their winning streak. fun, football, horsehoe')
+  it "should generate description string based on description by default" do
+    @event.meta_description.should eql('Ohio State looks to extend their winning streak')
   end
   
-  it "should generate description string based on name, description, city_name by default" do
-    @event.meta_description( [:name, :description, :city_name] ).should eql('Ohio State vs Wisconsin. Ohio State looks to extend their winning streak. Columbus')
+  it "should generate description string based on city name and description when custom attributes are applied" do
+    @event.meta_description( [:city_name, :description] ).should eql('Columbus. Ohio State looks to extend their winning streak')
   end
   
-  it "should be able to update the default seo_id attributes" do
+  it "should limit the number of characters for a description to the first 30 words" do
+    @event.description = "This is a description with over 30 words, so hopefully it will get truncated properly such that we end up with happy little dots at the end of the meta description"
+    @event.meta_description( [:name, :description, :city_name] ).should match(/.../)
+  end
+  
+  it "should be able to update the seo_id attributes" do
     class << Event
-      def default_seo_id_attributes
+      def seo_id_attributes
         [ :name ] 
       end
     end
     @event.seo_id.should eql('ohio-state-vs-wisconsin')
   end
   
-  it "should be able to update the default meta_keyword attributes" do
+  it "should be able to update the meta_keyword attributes" do
     class << Event
-      def default_meta_keywords_attributes
+      def meta_keywords_attributes
         [ :name ] 
       end
     end
     @event.meta_keywords.should eql('Ohio State vs Wisconsin')
   end
   
-  it "should be able to update the default meta_description attributes" do
+  it "should be able to update the meta_description attributes" do
     class << Event
-      def default_meta_description_attributes
+      def meta_description_attributes
         [ :name ] 
       end
     end

@@ -8,31 +8,36 @@ module HappySeo
     module ClassMethods
       def happy_seo
         class << self
-          define_method(:default_seo_id_attributes) do
-            [ :id, :name ] 
-          end unless respond_to?(:default_seo_id_attributes)  
-          define_method(:default_meta_keywords_attributes) do
-            [ :name, :description, :tags ] 
-          end unless respond_to?(:default_meta_keywords_attributes)
-          define_method(:default_meta_description_attributes) do 
-            [ :name, :description, :tags ] 
-          end unless respond_to?(:default_meta_description_attributes)
+          define_method(:seo_id_attributes) do
+            [ :id, :name ]
+          end unless respond_to?(:seo_id_attributes)
+          define_method(:meta_keywords_attributes) do
+            [ :name, :description, :tags ]
+          end unless respond_to?(:meta_keywords_attributes)
+          define_method(:meta_description_attributes) do
+            [ :description ]
+          end unless respond_to?(:meta_description_attributes)
         end
         include HappySeo::Base::InstanceMethods
       end
     end
     
     module InstanceMethods
-      def seo_id( attributes=self.class.default_seo_id_attributes )
-        return_values = calculate_attributes( attributes ) { |return_values| clean_string( return_values.join(" ") ) }
+      def seo_id( attributes=self.class.seo_id_attributes )
+        calculate_attributes( attributes ) { |return_values| clean_string( return_values.join(" ") ) }
       end
 
-      def meta_keywords( attributes=self.class.default_meta_keywords_attributes )
-        return_values = calculate_attributes( attributes ) { |return_values| return_values.join(", ") }
+      def meta_keywords( attributes=self.class.meta_keywords_attributes )
+        calculate_attributes( attributes ) { |return_values| return_values.join(", ") }
       end
 
-      def meta_description( attributes=self.class.default_meta_description_attributes )
-        return_values = calculate_attributes( attributes ) { |return_values| return_values.join(". ") }
+      def meta_description( attributes=self.class.meta_description_attributes )
+        str = calculate_attributes( attributes ) { |return_values| return_values.join(". ") }
+        str.split[0..29].join(" ") + (str.split.size > 30 ? "..." : "")
+      end
+      
+      def to_param
+        seo_id
       end
 
       private
