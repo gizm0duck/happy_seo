@@ -33,8 +33,8 @@ describe HappySeo do
     @event.seo_id( [:id, :city_name, :name] ).should eql('1-columbus-ohio-state-vs-wisconsin')
   end
   
-  it "should generate keywords string based on name, description, tags by default" do
-    @event.meta_keywords.should eql('Ohio State vs Wisconsin, Ohio State looks to extend their winning streak, fun, football, horsehoe')
+  it "should generate keywords string based on name and tags by default" do
+    @event.meta_keywords.should eql('Ohio State vs Wisconsin, fun, football, horsehoe')
   end
   
   it "should generate keywords string based on name, city_name, tags when custom attributes are applied" do

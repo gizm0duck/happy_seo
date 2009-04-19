@@ -12,7 +12,7 @@ module HappySeo
             [ :id, :name ]
           end unless respond_to?(:seo_id_attributes)
           define_method(:meta_keywords_attributes) do
-            [ :name, :description, :tags ]
+            [ :name, :tags ]
           end unless respond_to?(:meta_keywords_attributes)
           define_method(:meta_description_attributes) do
             [ :description ]
