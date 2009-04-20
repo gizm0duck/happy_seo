@@ -36,10 +36,11 @@ Basic Usage
   >> joel.meta_description
   => "Joel F. Salatin (born 1957) is an American farmer, lecturer, and author whose books include You Can Farm and Salad Bar Beef. Salatin raises livestock using holistic methods of animal..."
   
-  The plugin will even generate a to_param method for your object utilizing the seo_id that you have configured for it
+  The plugin will even generate a to_param method for your object utilizing the seo_id that you have configured for it, so 
+  your link_to methods will automatically begin to utilize the improved seo url's
   
-  >> joel.to_param
-  => "2-joel-salatin"
+  >> <%= link_to author.name, author %>
+  => '/authors/2-joel-salatin'
 
 Modifying the Attributes from the Defaults
 
